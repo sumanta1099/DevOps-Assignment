@@ -1,6 +1,6 @@
 # test_app.py
 import unittest
-from app import app
+from urllib.parse import quote
 
 class TestApp(unittest.TestCase):
     def setUp(self):
@@ -13,3 +13,4 @@ class TestApp(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
