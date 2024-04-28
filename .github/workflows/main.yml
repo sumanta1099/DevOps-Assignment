@@ -29,10 +29,8 @@ jobs:
     - name: Deploy to Railway (if tests pass)
       if: ${{ success() }}
       run: |
-        # Replace these commands with Railway deployment steps
-        # Example:
-        # railway link
-        # railway deploy
-        # railway open
+        railway link
+        railway deploy
+        railway open
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
