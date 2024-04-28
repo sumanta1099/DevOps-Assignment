@@ -26,6 +26,9 @@ jobs:
     - name: Run tests
       run: python -m unittest discover
 
+    - name: Install Railway CLI
+      run: npm install -g railway
+
     - name: Deploy to Railway (if tests pass)
       if: ${{ success() }}
       run: |
