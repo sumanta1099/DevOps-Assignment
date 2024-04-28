@@ -1,0 +1,44 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: List files in directory
+      run: |
+        ls -l
+
+    - name: Install dependencies
+      run: |
+        if [ -f "requirements.txt" ]; then
+          echo "requirements.txt found"
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        else
+          echo "requirements.txt not found"
+        fi
+
+    - name: Run tests
+      run: python -m unittest discover -s tests
+
+    - name: Deploy to Railway (if tests pass)
+      if: ${{ success() }}
+      uses: 'railwayapp/start-action@v1'
+      with:
+        args: 'deploy --env production'
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
