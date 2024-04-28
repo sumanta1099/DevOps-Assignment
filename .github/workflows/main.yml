@@ -26,13 +26,21 @@ jobs:
     - name: Run tests
       run: python -m unittest discover
 
+    # - name: Deploy to Railway (if tests pass)
+    #   if: ${{ success() }}
+    #   run: |
+    #     # Replace these commands with Railway deployment steps
+    #     # Example:
+    #     # railway link
+    #     # railway deploy
+    #     # railway open
+    #   env:
+    #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
     - name: Deploy to Railway (if tests pass)
       if: ${{ success() }}
-      run: |
-        # Replace these commands with Railway deployment steps
-        # Example:
-        # railway link
-        # railway deploy
-        # railway open
+      uses: 'railwayapp/start-action@v1'
+      with:
+        args: 'deploy --env production'
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
